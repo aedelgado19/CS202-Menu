@@ -1,23 +1,65 @@
+/* Author: Allison Delgado
+ * CS 202 Summer 2021
+ * This class contains the RBT (red black tree) class in which each
+ * node contains a LLL of an order. The classes are nested so that 
+ * they are only able to be accessed by the classes that need to access them.
+ * 
+ * Last updated: aug 27, 2021
+ */
+
+//RBT class: contains B_Node, LLL, L_Node
 class RBT {
 	final int RED = 1;
 	final int BLACK = 2;
 	B_Node root;
 
+	//B_Node class: contains LLL, L_Node
 	class B_Node {
 		B_Node parent;
 		B_Node left;
 		B_Node right;
 		int color;
 		LLL order;
+	
+		public B_Node() {
+			parent = null;
+			left = null;
+			right = null;
+			color = RED;
+			order = new LLL(); 
+		}
 		
+		// LLL  class: contains L_Node
 		class LLL{
 			L_Node head;
+			
+			public LLL() {
+				head = null;
+			}
+			
+			public void insert(String food) {
+				head = insert(food, head);
+			}
+			
+			private L_Node insert(String food, L_Node cur) {
+				if(cur == null) {
+					L_Node node = new L_Node(food);
+					return node;
+				} 
+				cur.next = insert(food, cur.next);
+				return cur;
+			}
+			
+			public char key() {
+				return head.data.charAt(0);
+			}
 			
 			//wrapper display
 			public void display() {
 				display(head);
 			}
 			
+			//recursive display
 			private void display(L_Node cur) {
 				if(cur == null) {
 					return;
@@ -26,23 +68,14 @@ class RBT {
 				display(cur.next);
 			}
 			
-			//similar to a hash. provides a key used in the tree
-			public int key() {
-				int count = 0;
-				L_Node current = head;
-				while(current.next != null) {
-					count++;
-					current = current.next;
-				}
-				int to_return = count + head.data.length();
-				return to_return;
-			}
 			
+			//delete the whole LLL
 			public L_Node delete() {
 				head = null;
 				return head;
 			}
 			
+			//class for the L_Node
 			class L_Node {
 				String data;
 				L_Node next;
@@ -54,51 +87,46 @@ class RBT {
 		}
 		
 	}
-	public B_Node delete() {
+	
+	//deletes the whole tree
+	public void delete() {
 		root = null;
-		return root;
 	}
 	
 	//wrapper insert
-	public RBT insert(B_Node node, RBT tree) {
-		insert(node, tree.root, tree);
-		return null;
-		
+	public void insert(String food) {
+		root = insert(food, this.root);
 	}
 	
 	//insert a new node
-	private RBT insert(B_Node to_add, B_Node cur, RBT tree) {
+	private B_Node insert(String food, B_Node cur) {
 		//new root
-		if(tree == null) {
-			tree.root = new B_Node();
-			tree.root = to_add;
-			return tree;
+		if(cur == null) {
+			cur = new B_Node();
+			cur.order.insert(food);
+			return cur;
 		}
 		
 		//right side
-		else if(to_add.order.key() > cur.order.key()) {
-			if(cur.right == null) {
-				cur.right = to_add;
-			} else {
-				insert(to_add, cur.right, tree);
-			}
+		if(cur.order.key() < food.charAt(0)) {
+			cur.right = insert(food, cur.right);
 		}
 		
 		//left
-		else if(to_add.order.key() < cur.order.key()) {
-			if(cur.left == null) {
-				cur.left = to_add;
-			} else {
-				insert(to_add, cur.left, tree);
-			}
+		else if(cur.order.key() > food.charAt(0)){
+			cur.left = insert(food, cur.left);
+		} 
+		
+		else {
+			cur.order.insert(food);
 		}
 		
-		return null;
+		return cur;
 	}
 	
 	//display the tree
-	public void display(RBT tree) {
-		display(tree.root);
+	public void display() {
+		display(root);
 	}
 	
 	//recursive display for the tree
@@ -106,12 +134,13 @@ class RBT {
 		if(cur == null) {
 			return;
 		}
+		
+		display(cur.left);
 		cur.order.display();
 		display(cur.right);
-		display(cur.left);
-		
 	}
 	
+	//tree fixup for insertion to maintain RBT structure
 	public RBT tree_fixup(B_Node node, RBT tree) {
 		while(node.parent != null && node.parent.color == RED) {
 			if(node.parent.parent.left == node.parent) { //left child
