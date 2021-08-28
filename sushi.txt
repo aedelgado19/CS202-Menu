@@ -1,5 +1,8 @@
-Sushi
-3
-Nigiri, Salmon, Yellowtail, Tuna
-Hand rolls, Spicy tuna, Avocado, Salmon
-Specialty Rolls, Dragon roll, Spider roll, King crab roll
+7
+Salmon nigiri 
+Yellowtail nigiri
+Tuna nigiri
+Spicy tuna roll
+Avocado roll
+Dragon roll
+Spider roll

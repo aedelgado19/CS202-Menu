@@ -1,5 +1,10 @@
-Drinks
-3
-Warm, coffee, green tea, black tea
-Cold, lemonade, iced tea, sparkling water
-Soda, Sprite, Dr. Pepper, Coca Cola 
+9
+coffee
+green tea
+black tea
+lemonade
+iced tea
+sparkling water
+Sprite
+Dr. Pepper
+Coca Cola

@@ -1,5 +1,10 @@
-Ramen
-3
-shio, low sodium, spicy, normal
-shoyu, low sodium, spicy, normal
-tonkotsu, low sodium, spicy, normal
+9
+Regular shio
+Shio (add extra protein)
+Shio (add extra noodles)
+Regular shoyu
+Shoyu (add extra protein)
+Shoyu (add extra noodles)
+Regular Tonkotsu
+Tonkotsu (add extra protein)
+Tonkotsu (add extra noodles)
